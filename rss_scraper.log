@@ -1,0 +1,47 @@
+2025-04-03 00:14:16,895 - axios_rss - INFO - 启动Axios RSS抓取程序
+2025-04-03 00:14:16,895 - axios_rss - INFO - 已设置定时任务，将在美东时间每天00:00运行
+2025-04-03 00:14:16,895 - axios_rss - INFO - 开始获取Axios RSS内容
+2025-04-03 00:14:18,670 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/trump-tariffs-hiring-jobs-adp, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/trump-tariffs-hiring-jobs-adp
+2025-04-03 00:14:18,671 - axios_rss - INFO - 找到今日文章: Trump tariffs, falling business confidence may not affect hiring yet
+2025-04-03 00:14:18,863 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/federal-worker-buyouts-trump-administration, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/federal-worker-buyouts-trump-administration
+2025-04-03 00:14:18,864 - axios_rss - INFO - 找到今日文章: Second buyout offer sent to some federal workers
+2025-04-03 00:14:19,049 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/eric-adams-case-dismissed-judge, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/eric-adams-case-dismissed-judge
+2025-04-03 00:14:19,050 - axios_rss - INFO - 找到今日文章: Eric Adams' federal corruption case dismissed by judge
+2025-04-03 00:14:19,249 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/trump-truth-social-stock, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/trump-truth-social-stock
+2025-04-03 00:14:19,250 - axios_rss - INFO - 找到今日文章: Trump's Truth Social files for his trust to sell up to $2.3 billion in stock
+2025-04-03 00:14:19,572 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/trump-tariffs-low-income, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/trump-tariffs-low-income
+2025-04-03 00:14:19,573 - axios_rss - INFO - 找到今日文章: Trump tariffs would hit lower-income Americans hardest
+2025-04-03 00:14:19,761 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/joe-rogan-trump-deportations-ice-el-salvador, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/joe-rogan-trump-deportations-ice-el-salvador
+2025-04-03 00:14:19,762 - axios_rss - INFO - 找到今日文章: Rogan warns of Trump admin's "horrific" deportations
+2025-04-03 00:14:19,968 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/hhs-layoffs-rfk-scientists-experts, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/hhs-layoffs-rfk-scientists-experts
+2025-04-03 00:14:19,969 - axios_rss - INFO - 找到今日文章: HHS sees day of chaos as layoffs hit scientists, policy experts
+2025-04-03 00:14:20,158 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/canada-trump-tariffs-home-sell, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/canada-trump-tariffs-home-sell
+2025-04-03 00:14:20,159 - axios_rss - INFO - 找到今日文章: Canadian snowbirds are selling their U.S. homes
+2025-04-03 00:14:20,349 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/rfk-jr-messaging-problem-trump-white-house, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/rfk-jr-messaging-problem-trump-white-house
+2025-04-03 00:14:20,350 - axios_rss - INFO - 找到今日文章: White House fed up with RFK Jr.'s sluggish press shop
+2025-04-03 00:14:20,534 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/liberation-day-trump-tariffs, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/liberation-day-trump-tariffs
+2025-04-03 00:14:20,535 - axios_rss - INFO - 找到今日文章: Trump's "Liberation Day" may not bring the clarity everyone wanted
+2025-04-03 00:14:20,725 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/trump-iran-talks-bomb-threats, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/trump-iran-talks-bomb-threats
+2025-04-03 00:14:20,726 - axios_rss - INFO - 找到今日文章: Trump seriously considering Iran's offer of indirect nuclear talks
+2025-04-03 00:14:20,912 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/wisconsin-florida-special-elections-trump, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/wisconsin-florida-special-elections-trump
+2025-04-03 00:14:20,913 - axios_rss - INFO - 找到今日文章: MAGA's brutal jolt: 3 takeaways from Wisconsin and the Florida special elections
+2025-04-03 00:14:21,100 - axios_rss - ERROR - 获取文章内容时出错: https://www.axios.com/2025/04/02/wisconsin-supreme-court-race-results, 错误: 403 Client Error: Forbidden for url: https://www.axios.com/2025/04/02/wisconsin-supreme-court-race-results
+2025-04-03 00:14:21,101 - axios_rss - INFO - 找到今日文章: Dem-backed candidate wins Wisconsin Supreme Court race in rebuke to Trump, Musk
+2025-04-03 00:14:21,103 - axios_rss - INFO - 保存了13篇文章到 articles/20250402.json
+2025-04-03 00:18:24,020 - axios_rss - INFO - 启动Axios RSS抓取程序
+2025-04-03 00:18:24,020 - axios_rss - INFO - 已设置定时任务，将在美东时间每天00:00运行
+2025-04-03 00:18:24,020 - axios_rss - INFO - 开始获取Axios RSS内容
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: Trump tariffs, falling business confidence may not affect hiring yet
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: Second buyout offer sent to some federal workers
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: Eric Adams' federal corruption case dismissed by judge
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: Trump's Truth Social files for his trust to sell up to $2.3 billion in stock
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: Trump tariffs would hit lower-income Americans hardest
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: Rogan warns of Trump admin's "horrific" deportations
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: HHS sees day of chaos as layoffs hit scientists, policy experts
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: Canadian snowbirds are selling their U.S. homes
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: White House fed up with RFK Jr.'s sluggish press shop
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: Trump's "Liberation Day" may not bring the clarity everyone wanted
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: Trump seriously considering Iran's offer of indirect nuclear talks
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: MAGA's brutal jolt: 3 takeaways from Wisconsin and the Florida special elections
+2025-04-03 00:18:25,032 - axios_rss - INFO - 找到今日文章: Dem-backed candidate wins Wisconsin Supreme Court race in rebuke to Trump, Musk
+2025-04-03 00:18:25,034 - axios_rss - INFO - 保存了13篇文章到 articles/20250402.json

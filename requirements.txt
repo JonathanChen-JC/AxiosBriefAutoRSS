@@ -1,0 +1,5 @@
+feedparser==6.0.10
+pytz==2023.3
+requests==2.31.0
+beautifulsoup4==4.12.2
+schedule==1.2.0

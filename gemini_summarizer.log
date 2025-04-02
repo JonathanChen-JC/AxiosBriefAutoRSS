@@ -1,0 +1,70 @@
+2025-04-03 00:36:12,315 - gemini_summarizer - ERROR - 每日简报生成失败
+2025-04-03 00:36:34,492 - gemini_summarizer - ERROR - 每日简报生成失败
+2025-04-03 00:36:56,606 - gemini_summarizer - INFO - 开始加载提示词模板
+2025-04-03 00:36:56,606 - gemini_summarizer - ERROR - 提示词模板加载失败，无法继续生成简报
+2025-04-03 00:36:56,606 - gemini_summarizer - ERROR - 每日简报生成失败
+2025-04-03 00:37:17,569 - gemini_summarizer - INFO - 开始加载提示词模板
+2025-04-03 00:37:17,569 - gemini_summarizer - INFO - 尝试从 prompt.md 加载提示词模板
+2025-04-03 00:37:17,569 - gemini_summarizer - INFO - 成功加载提示词模板，长度: 0 字符
+2025-04-03 00:37:17,569 - gemini_summarizer - ERROR - 提示词模板加载失败，无法继续生成简报
+2025-04-03 00:37:17,569 - gemini_summarizer - ERROR - 每日简报生成失败
+2025-04-03 00:37:58,220 - gemini_summarizer - INFO - 开始加载提示词模板
+2025-04-03 00:37:58,220 - gemini_summarizer - INFO - 尝试从 /Users/jonathanchen/Documents/GitHub/AxiosRSS/prompt.md 加载提示词模板
+2025-04-03 00:37:58,220 - gemini_summarizer - ERROR - 提示词模板文件内容为空
+2025-04-03 00:37:58,220 - gemini_summarizer - ERROR - 提示词模板加载失败，无法继续生成简报
+2025-04-03 00:37:58,220 - gemini_summarizer - ERROR - 每日简报生成失败
+2025-04-03 00:38:33,537 - gemini_summarizer - INFO - 开始加载提示词模板
+2025-04-03 00:38:33,537 - gemini_summarizer - INFO - 尝试从 /Users/jonathanchen/Documents/GitHub/AxiosRSS/prompt.md 加载提示词模板
+2025-04-03 00:38:33,537 - gemini_summarizer - ERROR - 提示词模板文件内容为空，使用默认提示词模板
+2025-04-03 00:38:33,537 - gemini_summarizer - INFO - 提示词模板加载成功
+2025-04-03 00:38:33,537 - gemini_summarizer - INFO - 开始加载文章，日期: 20250402
+2025-04-03 00:38:33,537 - gemini_summarizer - INFO - 从 articles/20250402.json 加载了 13 篇文章
+2025-04-03 00:38:33,537 - gemini_summarizer - INFO - 成功加载13篇文章
+2025-04-03 00:38:33,538 - gemini_summarizer - INFO - 开始调用Gemini API生成摘要
+2025-04-03 00:39:43,049 - gemini_summarizer - INFO - 成功生成摘要
+2025-04-03 00:39:43,050 - gemini_summarizer - INFO - Gemini API调用成功，已获取摘要
+2025-04-03 00:39:43,050 - gemini_summarizer - INFO - 开始保存简报
+2025-04-03 00:39:43,050 - gemini_summarizer - INFO - 简报已保存到 dailybrief/20250402.md
+2025-04-03 00:39:43,051 - gemini_summarizer - INFO - 简报已成功保存到: dailybrief/20250402.md
+2025-04-03 00:39:43,051 - gemini_summarizer - INFO - 每日简报生成成功
+2025-04-03 00:46:26,577 - gemini_summarizer - INFO - 使用默认提示词模板
+2025-04-03 00:46:26,577 - gemini_summarizer - INFO - 开始加载文章，日期: 今天
+2025-04-03 00:46:26,592 - gemini_summarizer - INFO - 从 articles/20250402.json 加载了 13 篇文章
+2025-04-03 00:46:26,592 - gemini_summarizer - INFO - 成功加载13篇文章
+2025-04-03 00:46:26,592 - gemini_summarizer - INFO - 开始调用Gemini API生成摘要
+2025-04-03 00:46:28,072 - gemini_summarizer - ERROR - API请求失败，状态码: 400, 响应: {
+  "error": {
+    "code": 400,
+    "message": "API key not valid. Please pass a valid API key.",
+    "status": "INVALID_ARGUMENT",
+    "details": [
+      {
+        "@type": "type.googleapis.com/google.rpc.ErrorInfo",
+        "reason": "API_KEY_INVALID",
+        "domain": "googleapis.com",
+        "metadata": {
+          "service": "generativelanguage.googleapis.com"
+        }
+      },
+      {
+        "@type": "type.googleapis.com/google.rpc.LocalizedMessage",
+        "locale": "en-US",
+        "message": "API key not valid. Please pass a valid API key."
+      }
+    ]
+  }
+}
+
+2025-04-03 00:46:28,074 - gemini_summarizer - ERROR - Gemini API调用失败，无法生成摘要
+2025-04-03 00:46:28,074 - gemini_summarizer - ERROR - 每日简报生成失败
+2025-04-03 00:48:02,806 - gemini_summarizer - INFO - 使用默认提示词模板
+2025-04-03 00:48:02,806 - gemini_summarizer - INFO - 开始加载文章，日期: 今天
+2025-04-03 00:48:02,821 - gemini_summarizer - INFO - 从 articles/20250402.json 加载了 13 篇文章
+2025-04-03 00:48:02,821 - gemini_summarizer - INFO - 成功加载13篇文章
+2025-04-03 00:48:02,821 - gemini_summarizer - INFO - 开始调用Gemini API生成摘要
+2025-04-03 00:49:06,365 - gemini_summarizer - INFO - 成功生成摘要
+2025-04-03 00:49:06,367 - gemini_summarizer - INFO - Gemini API调用成功，已获取摘要
+2025-04-03 00:49:06,367 - gemini_summarizer - INFO - 开始保存简报
+2025-04-03 00:49:06,367 - gemini_summarizer - INFO - 简报已保存到 dailybrief/20250402.md
+2025-04-03 00:49:06,367 - gemini_summarizer - INFO - 简报已成功保存到: dailybrief/20250402.md
+2025-04-03 00:49:06,367 - gemini_summarizer - INFO - 每日简报生成成功
