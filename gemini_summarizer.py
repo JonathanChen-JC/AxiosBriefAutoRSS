@@ -89,7 +89,7 @@ def call_gemini_api(api_key, prompt, articles):
                 }
             ],
             "generationConfig": {
-                "temperature": 0.2,
+                "temperature": 1.0,
                 "topK": 40,
                 "topP": 0.95,
                 "maxOutputTokens": 8192
