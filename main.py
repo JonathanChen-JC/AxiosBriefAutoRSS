@@ -29,9 +29,7 @@ logging.basicConfig(
     datefmt=log_datefmt,
     handlers=[
         # 标准输出处理器，确保日志在Render平台上可见
-        logging.StreamHandler(sys.stdout),
-        # 文件处理器，在本地开发时保存日志
-        logging.FileHandler('app.log', encoding='utf-8')
+        logging.StreamHandler(sys.stdout)
     ]
 )
 
