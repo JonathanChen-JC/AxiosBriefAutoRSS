@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sys
 import requests
 import logging
 import base64
@@ -10,14 +11,25 @@ from datetime import datetime
 import pytz
 
 # 设置日志
+log_format = '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
+log_datefmt = '%Y-%m-%d %H:%M:%S %z'
+
+# 配置根日志记录器
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format=log_format,
+    datefmt=log_datefmt,
     handlers=[
-        logging.StreamHandler()
+        # 标准输出处理器，确保日志在Render平台上可见
+        logging.StreamHandler(sys.stdout),
+        # 文件处理器，在本地开发时保存日志
+        logging.FileHandler('app.log', encoding='utf-8')
     ]
 )
+
+# 设置模块日志记录器
 logger = logging.getLogger("github_sync")
+logger.setLevel(logging.INFO)
 
 # 常量定义
 RSS_FILENAME = "axiosbrief.xml"
@@ -201,7 +213,11 @@ def sync_rss_with_github(repo_owner, repo_name, token=None):
         # 如果只有一个可以解析，使用可解析的那个
         if local_date is None:
             with open(RSS_FILENAME, "w", encoding="utf-8") as f:
-                f.write(github_content)
+                # 确保github_content不为None后再写入文件
+                if github_content is not None:
+                    f.write(github_content)
+                else:
+                    logger.error("GitHub内容为空，无法写入文件")
             logger.info(f"使用GitHub上的RSS文件（本地文件日期无法解析）")
             return True
         

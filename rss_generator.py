@@ -6,18 +6,30 @@ import json
 import datetime
 import pytz
 import logging
+import sys
 import feedparser
 from feedgen.feed import FeedGenerator
 
 # 设置日志
+log_format = '%(asctime)s [%(name)s] %(levelname)s: %(message)s'
+log_datefmt = '%Y-%m-%d %H:%M:%S %z'
+
+# 配置根日志记录器
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+    format=log_format,
+    datefmt=log_datefmt,
     handlers=[
-        logging.StreamHandler()
+        # 标准输出处理器，确保日志在Render平台上可见
+        logging.StreamHandler(sys.stdout),
+        # 文件处理器，在本地开发时保存日志
+        logging.FileHandler('app.log', encoding='utf-8')
     ]
 )
+
+# 设置模块日志记录器
 logger = logging.getLogger("rss_generator")
+logger.setLevel(logging.INFO)
 
 # 常量定义
 ARTICLES_DIR = "articles"
@@ -30,6 +42,37 @@ def get_eastern_time():
     eastern = pytz.timezone('US/Eastern')
     return datetime.datetime.now(eastern)
 
+def markdown_to_html(markdown_text):
+    """将Markdown文本转换为HTML，确保段落之间有适当的空行
+    
+    Args:
+        markdown_text (str): Markdown格式的文本
+        
+    Returns:
+        str: 转换后的HTML文本，段落之间有适当的空行
+    """
+    # 分割文本为段落（按照空行分割）
+    paragraphs = markdown_text.split('\n\n')
+    
+    # 处理每个段落
+    html_paragraphs = []
+    for paragraph in paragraphs:
+        # 跳过空段落
+        if not paragraph.strip():
+            continue
+            
+        # 处理标题（以**开头和结尾的行）
+        if paragraph.strip().startswith('**') and paragraph.strip().endswith('**'):
+            # 将Markdown标题转换为HTML标题
+            html_paragraph = f'<h3>{paragraph.strip()[2:-2]}</h3>'
+        else:
+            # 普通段落，添加段落标签
+            html_paragraph = f'<p>{paragraph.strip()}</p>'
+            
+        html_paragraphs.append(html_paragraph)
+    
+    # 用两个换行符连接段落，确保在RSS阅读器中显示为分隔的段落
+    return '\n\n'.join(html_paragraphs)
 
 def generate_daily_rss(date_str=None):
     """生成指定日期的RSS，如果未指定日期则使用当前日期
@@ -70,6 +113,9 @@ def generate_daily_rss(date_str=None):
                 fg.link(href='https://github.com/yourusername/AxiosRSS', rel='alternate')
                 fg.subtitle('由Gemini AI生成的Axios新闻每日简报')
                 fg.language('zh-CN')
+                # 设置logo和icon
+                fg.logo('https://uploads.concordia.net/2022/09/13152518/Axios-logo-RGB-1.jpg')
+                fg.icon('https://uploads.concordia.net/2022/09/13152518/Axios-logo-RGB-1.jpg')
                 
                 # 添加现有的条目，但限制最多保留49个旧条目（加上新条目共50个）
                 entries_to_keep = []
@@ -140,7 +186,11 @@ def generate_daily_rss(date_str=None):
         fe.title(f'Axios每日简报 {pub_date.strftime("%Y-%m-%d")}')
         fe.link(href=f'https://github.com/yourusername/AxiosRSS/blob/main/dailybrief/{date_str}.md')
         fe.pubDate(pub_date)
-        fe.description(brief_content)
+        # 将Markdown格式的简报内容转换为HTML，确保段落之间有适当的空行
+        html_content = markdown_to_html(brief_content)
+        # 添加默认图片
+        html_content = f'<img src="https://uploads.concordia.net/2022/09/13152518/Axios-logo-RGB-1.jpg" alt="Axios Logo" style="max-width:100%;height:auto;margin-bottom:20px;"/><br/>{html_content}'
+        fe.description(html_content)
         
         # 生成RSS文件
         fg.rss_file(RSS_FILENAME, pretty=True)
