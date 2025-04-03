@@ -121,7 +121,7 @@ def generate_daily_rss(date_str=None):
                 entries_to_keep = []
                 for entry in existing_feed.entries:
                     # 检查是否已存在相同日期的条目，避免重复
-                    entry_date = entry.get('id', '').split('/')[-1]
+                    entry_date = str(entry.id).split('/')[-1] if hasattr(entry, 'id') else ''
                     if entry_date != date_str:  # 如果不是当前日期的条目，则添加到待保留列表
                         entries_to_keep.append(entry)
                 
