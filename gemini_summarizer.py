@@ -14,7 +14,6 @@ logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("gemini_summarizer.log"),
         logging.StreamHandler()
     ]
 )
@@ -23,7 +22,11 @@ logger = logging.getLogger("gemini_summarizer")
 # 常量定义
 ARTICLES_DIR = "articles"
 DAILYBRIEF_DIR = "dailybrief"
-GEMINI_API_URL = "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-pro-exp-03-25:generateContent"
+
+# 从环境变量获取Gemini模型名称，如果未设置则使用默认值
+DEFAULT_MODEL = "gemini-2.5-pro-exp-03-25"
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", DEFAULT_MODEL)
+GEMINI_API_URL = f"https://generativelanguage.googleapis.com/v1beta/models/{GEMINI_MODEL}:generateContent"
 
 
 def ensure_dir_exists(directory):
@@ -40,13 +43,15 @@ def get_eastern_time():
 
 
 # 默认提示词模板
-DEFAULT_PROMPT = """你是美国主流媒体的资深编辑，擅长提炼新闻的要点，并在不遗漏新闻重要信息的前提下，用简练的语言表达。请将文件中的所有新闻，浓缩为要点，整合成一篇每日新闻简报形式的摘要。简报的格式为：
+DEFAULT_PROMPT = """你是美国主流媒体的资深编辑，在不遗漏新闻重要信息的前提下。请将文件中的所有新闻，整合成一篇每日新闻简报形式的摘要。简报的格式为：
 
 第1自然段：总结文件中所有新闻所涉及的事件，不要展开细节。
-接下来的自然段，以每条新闻为一个自然段，分别总结新闻的要点。
+然后，##以每条新闻为一个自然段，分别总结新闻的要点。每个新闻事件都要配上加粗的小标题。##
 最后一个自然段：根据当天的新闻，提供面向政治家和投资者的决策建议。
 
-请注意，你得到文本中存在大量 JSON 格式代码，请正确理解这些代码的含义，同时不要让它们出现于简报中。"""
+请注意，你得到文本中存在大量 JSON 格式代码，请正确理解这些代码的含义，同时不要让它们出现于简报中。
+
+##请直接输出正文，不要在开头输出响应我服务的回应##"""
 
 
 def load_articles(date_str=None):
@@ -75,9 +80,16 @@ def load_articles(date_str=None):
         return None
 
 
-def call_gemini_api(api_key, prompt, articles):
+def call_gemini_api(api_key=None, prompt=None, articles=None):
     """调用Gemini API生成摘要"""
     try:
+        # 如果未提供API密钥，从环境变量获取
+        if api_key is None:
+            api_key = os.environ.get("GEMINI_API_KEY")
+            if not api_key:
+                logger.error("未提供API密钥且环境变量GEMINI_API_KEY未设置")
+                return None
+        
         # 构建请求数据
         request_data = {
             "contents": [
@@ -92,7 +104,7 @@ def call_gemini_api(api_key, prompt, articles):
                 "temperature": 1.0,
                 "topK": 40,
                 "topP": 0.95,
-                "maxOutputTokens": 8192
+                "maxOutputTokens": 100000
             }
         }
         
@@ -102,8 +114,11 @@ def call_gemini_api(api_key, prompt, articles):
             "x-goog-api-key": api_key
         }
         
+        # 获取当前的API URL（可能已被环境变量更新）
+        current_api_url = f"https://generativelanguage.googleapis.com/v1beta/models/{os.environ.get('GEMINI_MODEL', GEMINI_MODEL)}:generateContent"
+        
         response = requests.post(
-            GEMINI_API_URL,
+            current_api_url,
             headers=headers,
             json=request_data
         )
@@ -151,11 +166,19 @@ def save_daily_brief(content, date_str=None):
         return None
 
 
-def generate_daily_brief(api_key, date_str=None):
+def generate_daily_brief(api_key=None, date_str=None):
     """生成每日简报"""
     # 使用默认提示词
     prompt = DEFAULT_PROMPT
     logger.info("使用默认提示词模板")
+    
+    # 如果未提供API密钥，尝试从环境变量获取
+    if api_key is None:
+        api_key = os.environ.get("GEMINI_API_KEY")
+        if not api_key:
+            logger.error("未提供API密钥且环境变量GEMINI_API_KEY未设置，无法生成简报")
+            return False
+        logger.info("使用环境变量中的GEMINI_API_KEY")
     
     # 加载文章
     logger.info(f"开始加载文章，日期: {date_str if date_str else '今天'}")
@@ -188,15 +211,26 @@ def main():
     """主函数"""
     # 解析命令行参数
     parser = argparse.ArgumentParser(description="使用Gemini API生成每日新闻简报")
-    parser.add_argument("--api-key", required=True, help="Gemini API密钥")
+    parser.add_argument("--api-key", help="Gemini API密钥，如果未提供则使用环境变量GEMINI_API_KEY")
     parser.add_argument("--date", help="指定日期 (YYYYMMDD格式)，默认为当天")
+    parser.add_argument("--model", help="指定Gemini模型名称，如果未提供则使用环境变量GEMINI_MODEL或默认值")
     args = parser.parse_args()
+    
+    # 如果提供了模型名称，设置环境变量
+    if args.model:
+        os.environ["GEMINI_MODEL"] = args.model
+        logger.info(f"使用命令行指定的模型: {args.model}")
+    
+    # 如果提供了API密钥，设置环境变量
+    if args.api_key:
+        os.environ["GEMINI_API_KEY"] = args.api_key
+        logger.info("使用命令行提供的API密钥")
     
     # 确保目录存在
     ensure_dir_exists(DAILYBRIEF_DIR)
     
     # 生成每日简报
-    success = generate_daily_brief(args.api_key, args.date)
+    success = generate_daily_brief(date_str=args.date)
     
     if success:
         logger.info("每日简报生成成功")
