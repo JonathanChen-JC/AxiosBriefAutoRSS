@@ -71,29 +71,44 @@ def generate_daily_rss(date_str=None):
                 fg.subtitle('由Gemini AI生成的Axios新闻每日简报')
                 fg.language('zh-CN')
                 
-                # 添加现有的条目
+                # 添加现有的条目，但限制最多保留49个旧条目（加上新条目共50个）
+                entries_to_keep = []
                 for entry in existing_feed.entries:
                     # 检查是否已存在相同日期的条目，避免重复
                     entry_date = entry.get('id', '').split('/')[-1]
-                    if entry_date != date_str:  # 如果不是当前日期的条目，则添加
-                        fe = fg.add_entry()
-                        fe.id(entry.id)
-                        fe.title(entry.title)
-                        fe.link(href=entry.link)
-                        # 解析发布日期
+                    if entry_date != date_str:  # 如果不是当前日期的条目，则添加到待保留列表
+                        entries_to_keep.append(entry)
+                
+                # 按发布日期排序（从新到旧）
+                entries_to_keep.sort(key=lambda x: datetime.datetime.strptime(
+                    x.published.split(',')[1].strip(), '%d %b %Y %H:%M:%S %z' if '%z' in x.published else '%d %b %Y %H:%M:%S -0456'
+                ) if hasattr(x, 'published') else datetime.datetime.now(), reverse=True)
+                
+                # 只保留最新的49个条目（加上新条目共50个）
+                if len(entries_to_keep) > 49:
+                    entries_to_keep = entries_to_keep[:49]
+                    logger.info(f"限制RSS条目数量为50个，移除了最旧的条目")
+                
+                # 添加保留的条目
+                for entry in entries_to_keep:
+                    fe = fg.add_entry()
+                    fe.id(entry.id)
+                    fe.title(entry.title)
+                    fe.link(href=entry.link)
+                    # 解析发布日期
+                    try:
+                        pub_date = datetime.datetime.strptime(
+                            entry.published, '%a, %d %b %Y %H:%M:%S %z')
+                    except ValueError:
+                        # 尝试其他可能的日期格式
                         try:
                             pub_date = datetime.datetime.strptime(
-                                entry.published, '%a, %d %b %Y %H:%M:%S %z')
+                                entry.published, '%a, %d %b %Y %H:%M:%S %Z')
                         except ValueError:
-                            # 尝试其他可能的日期格式
-                            try:
-                                pub_date = datetime.datetime.strptime(
-                                    entry.published, '%a, %d %b %Y %H:%M:%S %Z')
-                            except ValueError:
-                                # 如果无法解析，使用当前时间
-                                pub_date = datetime.datetime.now(pytz.timezone('US/Eastern'))
-                        fe.pubDate(pub_date)
-                        fe.description(entry.description)
+                            # 如果无法解析，使用当前时间
+                            pub_date = datetime.datetime.now(pytz.timezone('US/Eastern'))
+                    fe.pubDate(pub_date)
+                    fe.description(entry.description)
             except Exception as e:
                 logger.warning(f"解析现有RSS文件时出错: {str(e)}，将创建新的RSS文件")
                 # 如果解析失败，创建新的RSS文件
