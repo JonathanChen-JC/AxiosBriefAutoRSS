@@ -30,6 +30,17 @@ def home():
 def health_check():
     return {"status": "ok", "timestamp": time.time()}
 
+# RSS文件访问端点
+@app.route('/axiosbrief.xml')
+def serve_rss():
+    from flask import send_file
+    import os
+    rss_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "axiosbrief.xml")
+    if os.path.exists(rss_file_path):
+        return send_file(rss_file_path, mimetype='application/xml')
+    else:
+        return "RSS文件不存在", 404
+
 # 自我ping函数
 def self_ping():
     """每5分钟ping一次自己，保持服务活跃"""
