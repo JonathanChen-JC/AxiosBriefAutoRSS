@@ -1,1 +1,1 @@
-web: python render.py
+web: gunicorn app:app
