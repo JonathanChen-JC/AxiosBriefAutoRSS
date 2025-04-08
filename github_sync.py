@@ -42,7 +42,7 @@ def get_github_file_content(repo_owner, repo_name, file_path, branch="main", tok
         # 设置请求头
         headers = {"Accept": "application/vnd.github.v3+json"}
         if token:
-            headers["Authorization"] = f"token {token}"
+            headers["Authorization"] = f"Bearer {token}"
         
         # 发送请求
         response = requests.get(url, headers=headers)
@@ -80,7 +80,7 @@ def update_github_file(repo_owner, repo_name, file_path, content, commit_message
         url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/contents/{file_path}?ref={branch}"
         headers = {
             "Accept": "application/vnd.github.v3+json",
-            "Authorization": f"token {token}"
+            "Authorization": f"Bearer {token}"
         }
         
         # 获取当前文件信息
