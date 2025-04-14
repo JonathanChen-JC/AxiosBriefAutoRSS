@@ -4,6 +4,7 @@
 import os
 import json
 import datetime
+import markdown
 import pytz
 import logging
 import sys
@@ -92,7 +93,9 @@ def generate_daily_rss(date_str=None):
         
         # 读取简报内容
         with open(brief_filepath, "r", encoding="utf-8") as f:
-            brief_content = f.read()
+            brief_md_content = f.read()
+        
+        brief_html_content = markdown.markdown(brief_md_content)
         
         # 创建Feed生成器
         fg = FeedGenerator()
@@ -184,11 +187,9 @@ def generate_daily_rss(date_str=None):
         fe.title(f'Axios每日简报 {pub_date.strftime("%Y-%m-%d")}')
         fe.link(href=f'https://github.com/yourusername/AxiosRSS/blob/main/dailybrief/{date_str}.md')
         fe.pubDate(pub_date)
-        # 将Markdown格式的简报内容转换为HTML，确保段落之间有适当的空行
-        html_content = markdown_to_html(brief_content)
         # 添加默认图片
-        html_content = f'<img src="https://uploads.concordia.net/2022/09/13152518/Axios-logo-RGB-1.jpg" alt="Axios Logo" style="max-width:100%;height:auto;margin-bottom:20px;"/><br/>{html_content}'
-        fe.description(html_content)
+        brief_html_content = f'<img src="https://uploads.concordia.net/2022/09/13152518/Axios-logo-RGB-1.jpg" alt="Axios Logo" style="max-width:100%;height:auto;margin-bottom:20px;"/><br/>{brief_html_content}'
+        fe.description(brief_html_content)
         
         # 生成RSS文件
         fg.rss_file(RSS_FILENAME, pretty=True)
